@@ -28,6 +28,8 @@ def main():
         sys.argv.append('--insecure')
         execute_from_command_line([sys.argv[0], 'collectstatic', '--noinput'])
         execute_from_command_line([sys.argv[0], 'migrate'])
+        import webbrowser
+        webbrowser.open("http://localhost:{port}".format(port=settings.SETTINGS_MANAGE.get('SERVER_PORT')))
         execute_from_command_line(sys.argv)
     else:
         execute_from_command_line(sys.argv)
