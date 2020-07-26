@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 
 # Create your views here.
@@ -50,6 +49,10 @@ def change_start_bat(request):
 
     cmd = str(request.GET.get('cmd', ''))
 
-    settings.SETTINGS_MANAGE.change_start_bat(cmd=cmd, port=settings.SERVER_PORT)
+    settings.SETTINGS_MANAGE.change_start_bat(
+        cmd=cmd,
+        port=settings.SERVER_PORT,
+        python_path=settings.SETTINGS_MANAGE.get('PYTHON_PATH')
+    )
 
     return HttpResponseRedirect(reverse('get_port_info'))

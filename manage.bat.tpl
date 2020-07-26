@@ -9,4 +9,4 @@ goto js
 )
 :js
 taskkill /f /pid "!a:~71,5!"
-python.exe manage.py
+{python_path} manage.py

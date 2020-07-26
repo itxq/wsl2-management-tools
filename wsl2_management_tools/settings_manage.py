@@ -22,7 +22,8 @@ class SettingsManage:
     # 默认配置数据
     __settings = {
         'SERVER_PORT': '9205',
-        'START_BAT': ''
+        'START_BAT': '',
+        'PYTHON_PATH': 'python.exe',
     }
 
     def __init__(self, base_dir: str):
@@ -39,7 +40,10 @@ class SettingsManage:
         self.__settings_init()
 
         if not os.path.exists(self.cmd_bat_path):
-            self.change_start_bat(cmd='', port=self.__settings.get('SERVER_PORT'))
+            self.change_start_bat(
+                cmd='', port=self.__settings.get('SERVER_PORT'),
+                python_path=self.__settings.get('PYTHON_PATH')
+            )
 
     def set(self, name, value):
         """
@@ -86,9 +90,15 @@ class SettingsManage:
         with open(file, 'w') as f:
             f.write(content)
 
-    def change_start_bat(self, cmd: str = '', port: str = '9205'):
+    def change_start_bat(
+            self,
+            cmd: str = '',
+            port: str = __settings['SERVER_PORT'],
+            python_path: str = __settings['PYTHON_PATH']
+    ):
         """
         修改bat启动脚本
+        :param python_path:
         :param cmd:
         :param port:
         :return:
@@ -97,7 +107,7 @@ class SettingsManage:
         with open(self.cmd_bat_tpl_path, 'r') as f:
             cmd_tpl = f.read()
 
-        new_cmd = cmd_tpl.format(cmd=cmd, port=port)
+        new_cmd = cmd_tpl.format(cmd=cmd, port=port, python_path=python_path)
 
         with open(self.cmd_bat_path, 'w') as f:
             f.write(new_cmd)
