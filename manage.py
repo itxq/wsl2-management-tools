@@ -25,6 +25,7 @@ def main():
         sys.argv.append('runserver')
         sys.argv.append('0.0.0.0:{port}'.format(port=settings.SETTINGS_MANAGE.get('SERVER_PORT')))
         sys.argv.append('--noreload')
+        sys.argv.append('--insecure')
         execute_from_command_line([sys.argv[0], 'collectstatic', '--noinput'])
         execute_from_command_line([sys.argv[0], 'migrate'])
         execute_from_command_line(sys.argv)
