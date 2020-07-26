@@ -36,7 +36,9 @@ def index(request):
         'wsl_ip': wsl_ip,
         'wsl_info': wsl_info,
         'base_dir': settings.BASE_DIR,
-        'old_cmd_bat': settings.SETTINGS_MANAGE.get('START_BAT', ''),
+        'start_bat': settings.SETTINGS_MANAGE.get('START_BAT', ''),
+        'python_path': settings.SETTINGS_MANAGE.get('PYTHON_PATH', ''),
+        'server_port': settings.SETTINGS_MANAGE.get('SERVER_PORT', ''),
     })
 
 
@@ -48,11 +50,13 @@ def change_start_bat(request):
     """
 
     cmd = str(request.GET.get('cmd', ''))
+    port = str(request.GET.get('port', settings.SETTINGS_MANAGE.get('SERVER_PORT')))
+    python_path = str(request.GET.get('python_path', settings.SETTINGS_MANAGE.get('PYTHON_PATH')))
 
     settings.SETTINGS_MANAGE.change_start_bat(
         cmd=cmd,
-        port=settings.SERVER_PORT,
-        python_path=settings.SETTINGS_MANAGE.get('PYTHON_PATH')
+        port=port,
+        python_path=python_path
     )
 
     return HttpResponseRedirect(reverse('get_port_info'))

@@ -23,7 +23,7 @@ def main():
 
     if is_auto:
         sys.argv.append('runserver')
-        sys.argv.append('0.0.0.0:{port}'.format(port=settings.SERVER_PORT))
+        sys.argv.append('0.0.0.0:{port}'.format(port=settings.SETTINGS_MANAGE.get('SERVER_PORT')))
         sys.argv.append('--noreload')
         execute_from_command_line([sys.argv[0], 'collectstatic', '--noinput'])
         execute_from_command_line([sys.argv[0], 'migrate'])

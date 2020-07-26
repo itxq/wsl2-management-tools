@@ -104,6 +104,8 @@ class SettingsManage:
         :return:
         """
         self.set('START_BAT', cmd)
+        self.set('SERVER_PORT', port)
+        self.set('PYTHON_PATH', python_path)
         with open(self.cmd_bat_tpl_path, 'r') as f:
             cmd_tpl = f.read()
 

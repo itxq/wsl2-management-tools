@@ -123,8 +123,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
-
-# bat脚本模板路径
-CMD_BAT_TPL_PATH = SETTINGS_MANAGE.cmd_bat_tpl_path
-
-SERVER_PORT = SETTINGS_MANAGE.get('SERVER_PORT', '9205')
