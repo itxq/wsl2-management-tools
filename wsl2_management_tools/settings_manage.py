@@ -21,17 +21,25 @@ class SettingsManage:
 
     # 默认配置数据
     __settings = {
-        'SERVER_PORT': 9205,
+        'SERVER_PORT': '9205',
+        'START_BAT': ''
     }
 
     def __init__(self, base_dir: str):
         """
         初始化
         """
-        self.cmd_bat_tpl_path = os.path.join(base_dir, 'manage.bat.tpl')
+
         self.settings_dir = create_settings_path(path_name=os.path.join(base_dir, '.wsl2_management_tools'))
         self.settings_file = join(self.settings_dir, 'settings.json')
-        self.__get_file_content()
+
+        self.cmd_bat_tpl_path = os.path.join(base_dir, 'manage.bat.tpl')
+        self.cmd_bat_path = os.path.join(self.settings_dir, 'manage.bat')
+
+        self.__settings_init()
+
+        if not os.path.exists(self.cmd_bat_path):
+            self.change_start_bat(cmd='', port=self.__settings.get('SERVER_PORT'))
 
     def set(self, name, value):
         """
@@ -53,7 +61,7 @@ class SettingsManage:
             return self.__settings
         return self.__settings.get(name, default_value)
 
-    def __get_file_content(self):
+    def __settings_init(self):
         """
         读取json文件的内容并转为字典
         """
@@ -91,5 +99,5 @@ class SettingsManage:
 
         new_cmd = cmd_tpl.format(cmd=cmd, port=port)
 
-        with open(os.path.join(self.settings_dir, 'manage.bat'), 'w') as f:
+        with open(self.cmd_bat_path, 'w') as f:
             f.write(new_cmd)
