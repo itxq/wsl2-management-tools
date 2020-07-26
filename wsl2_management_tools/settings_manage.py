@@ -28,7 +28,7 @@ class SettingsManage:
         """
         初始化
         """
-
+        self.cmd_bat_tpl_path = os.path.join(base_dir, 'manage.bat.tpl')
         self.settings_dir = create_settings_path(path_name=os.path.join(base_dir, '.wsl2_management_tools'))
         self.settings_file = join(self.settings_dir, 'settings.json')
         self.__get_file_content()
@@ -77,3 +77,19 @@ class SettingsManage:
 
         with open(file, 'w') as f:
             f.write(content)
+
+    def change_start_bat(self, cmd: str = '', port: str = '9205'):
+        """
+        修改bat启动脚本
+        :param cmd:
+        :param port:
+        :return:
+        """
+        self.set('START_BAT', cmd)
+        with open(self.cmd_bat_tpl_path, 'r') as f:
+            cmd_tpl = f.read()
+
+        new_cmd = cmd_tpl.format(cmd=cmd, port=port)
+
+        with open(os.path.join(self.settings_dir, 'manage.bat'), 'w') as f:
+            f.write(new_cmd)

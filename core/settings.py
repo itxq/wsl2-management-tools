@@ -13,11 +13,16 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
+from wsl2_management_tools.settings_manage import SettingsManage
 from wsl2_management_tools.util import create_settings_path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SETTINGS_DIR = create_settings_path()
+SETTINGS_MANAGE = SettingsManage(base_dir=BASE_DIR)
+
+SETTINGS_DIR = SETTINGS_MANAGE.settings_dir
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -26,9 +31,9 @@ SETTINGS_DIR = create_settings_path()
 SECRET_KEY = 'u%@-!$hw4(8_xhu3(^5@@u9f!k2dhu2*oz*c__-th2#jsl9=o='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = SETTINGS_MANAGE.get('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -118,3 +123,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
+
+# bat脚本模板路径
+CMD_BAT_TPL_PATH = SETTINGS_MANAGE.cmd_bat_tpl_path
+
+SERVER_PORT = SETTINGS_MANAGE.get('SERVER_PORT', '9205')

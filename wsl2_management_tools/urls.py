@@ -14,4 +14,5 @@ urlpatterns = [
     path('del_port_wall_all/', views.del_port_wall_all, name='del_port_wall_all'),
     path('add_port_wall_all/', views.add_port_wall_all, name='add_port_wall_all'),
     path('update_port_wall_all/', views.update_port_wall_all, name='update_port_wall_all'),
+    path('change_bat/', views.change_start_bat, name='change_start_bat'),
 ]

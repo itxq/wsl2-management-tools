@@ -32,7 +32,6 @@
         </div>
     </form>
 
-
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -99,6 +98,15 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <form action="{% url 'change_start_bat' %}" class="form">
+        <div class="form-group">
+            <textarea name="cmd" class="form-control" placeholder="bat脚本" title="bat脚本" rows="4">{{ old_cmd_bat }}</textarea>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary btn-block">修改bat启动脚本</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>
