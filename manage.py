@@ -8,6 +8,7 @@ def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
     try:
         from django.core.management import execute_from_command_line
+        from django.conf import settings
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "
@@ -22,6 +23,7 @@ def main():
 
     if is_auto:
         sys.argv.append('runserver')
+        sys.argv.append('0.0.0.0:{port}'.format(port=settings.SERVER_PORT))
         sys.argv.append('--noreload')
         execute_from_command_line([sys.argv[0], 'collectstatic', '--noinput'])
         execute_from_command_line([sys.argv[0], 'migrate'])
