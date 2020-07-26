@@ -14,7 +14,20 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    execute_from_command_line(sys.argv)
+
+    try:
+        is_auto = not bool(sys.argv[1])
+    except IndexError:
+        is_auto = True
+
+    if is_auto:
+        sys.argv.append('runserver')
+        sys.argv.append('--noreload')
+        execute_from_command_line([sys.argv[0], 'collectstatic', '--noinput'])
+        execute_from_command_line([sys.argv[0], 'migrate'])
+        execute_from_command_line(sys.argv)
+    else:
+        execute_from_command_line(sys.argv)
 
 
 if __name__ == '__main__':
